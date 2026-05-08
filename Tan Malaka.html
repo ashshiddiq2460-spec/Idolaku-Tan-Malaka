@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Tan Malaka – Idolaku</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d0c0a;
+      --paper:    #1a1814;
+      --card:     #221f1b;
+      --gold:     #c9a84c;
+      --gold2:    #e8c97a;
+      --red:      #b83232;
+      --cream:    #f0e6cc;
+      --muted:    #8a7f6e;
+      --border:   #2e2a22;
+      --ff-head:  'Playfair Display', serif;
+      --ff-body:  'Lora', serif;
+      --radius:   10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: var(--ff-body);
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: .5;
+    }
+
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13,12,10,.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 52px;
+    }
+    .nav-logo {
+      font-family: var(--ff-head);
+      font-size: 16px;
+      color: var(--gold);
+      letter-spacing: .5px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 6px;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 11px;
+      font-family: var(--ff-body);
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      padding: 6px 8px;
+      border-radius: 4px;
+      transition: color .2s, background .2s;
+    }
+    .nav-links a:hover { color: var(--gold2); background: rgba(201,168,76,.08); }
+
+
+    .hero {
+      position: relative;
+      min-height: 95vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 20px 80px;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 30%, rgba(184,50,50,.18) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 80% at 20% 80%, rgba(201,168,76,.08) 0%, transparent 60%),
+        linear-gradient(180deg, #0d0c0a 0%, #140f0a 60%, #0d0c0a 100%);
+    }
+    .hero-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(201,168,76,.04) 39px, rgba(201,168,76,.04) 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(201,168,76,.03) 39px, rgba(201,168,76,.03) 40px);
+    }
+    .hero-badge {
+      position: relative;
+      display: inline-block;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 2px;
+      margin-bottom: 22px;
+      opacity: 0;
+      animation: fadeUp .6s .2s forwards;
+    }
+    .hero-name {
+      position: relative;
+      font-family: var(--ff-head);
+      font-size: clamp(44px, 12vw, 72px);
+      font-weight: 900;
+      line-height: 1.05;
+      color: var(--cream);
+      margin-bottom: 10px;
+      opacity: 0;
+      animation: fadeUp .7s .35s forwards;
+    }
+    .hero-name span { color: var(--gold); }
+    .hero-tagline {
+      position: relative;
+      font-style: italic;
+      font-size: clamp(13px, 3.5vw, 17px);
+      color: var(--muted);
+      max-width: 340px;
+      margin: 0 auto 28px;
+      opacity: 0;
+      animation: fadeUp .7s .5s forwards;
+    }
+    .hero-years {
+      position: relative;
+      font-family: var(--ff-head);
+      font-size: 13px;
+      letter-spacing: 4px;
+      color: var(--red);
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeUp .6s .65s forwards;
+    }
+    .hero-portrait {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 3px solid var(--gold);
+      box-shadow: 0 0 0 8px rgba(201,168,76,.08), 0 20px 50px rgba(0,0,0,.6);
+      margin: 0 auto 30px;
+      background: var(--card);
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeUp .7s .8s forwards;
+    }
+    .hero-portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      filter: sepia(20%) contrast(1.05);
+    }
+    .scroll-hint {
+      position: relative;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp .5s 1.1s forwards;
+    }
+    .scroll-hint::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 30px;
+      background: linear-gradient(to bottom, var(--muted), transparent);
+      margin: 8px auto 0;
+    }
+
+    
+    section {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 60px 18px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: var(--ff-head);
+      font-size: clamp(26px, 7vw, 36px);
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+    .section-title span { color: var(--gold); }
+    .divider {
+      width: 50px;
+      height: 2px;
+      background: linear-gradient(to right, var(--gold), var(--red));
+      margin-bottom: 28px;
+      border-radius: 2px;
+    }
+    p { color: #c8bda8; margin-bottom: 14px; font-size: 14.5px; }
+
+    #biografi { border-top: 1px solid var(--border); }
+
+    .quote-block {
+      border-left: 3px solid var(--gold);
+      padding: 14px 16px;
+      margin: 20px 0;
+      background: rgba(201,168,76,.05);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .quote-block p {
+      font-style: italic;
+      font-size: 14px;
+      color: var(--cream);
+      margin: 0;
+    }
+    .quote-block cite {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 8px;
+      letter-spacing: .5px;
+    }
+
+    .bio-timeline {
+      position: relative;
+      margin-top: 32px;
+    }
+    .bio-timeline::before {
+      content: '';
+      position: absolute;
+      left: 11px;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+    }
+    .tl-item {
+      display: flex;
+      gap: 18px;
+      margin-bottom: 24px;
+      padding-left: 4px;
+      align-items: flex-start;
+    }
+    .tl-dot {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      background: var(--bg);
+      margin-top: 2px;
+    }
+    .tl-content .tl-year {
+      font-family: var(--ff-head);
+      font-size: 12px;
+      letter-spacing: 1px;
+      color: var(--gold);
+      margin-bottom: 2px;
+    }
+    .tl-content .tl-desc {
+      font-size: 13.5px;
+      color: #b8ad9e;
+      margin: 0;
+      line-height: 1.55;
+    }
+
+    #prestasi { border-top: 1px solid var(--border); }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 4px;
+    }
+    .card-grid .card-wide { grid-column: 1 / -1; }
+
+    .pcard {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .2s, border-color .2s;
+    }
+    .pcard::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--gold), var(--red));
+    }
+    .pcard:hover { transform: translateY(-2px); border-color: var(--gold); }
+    .pcard-icon {
+      font-size: 22px;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .pcard-title {
+      font-family: var(--ff-head);
+      font-size: 14px;
+      color: var(--cream);
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .pcard-desc {
+      font-size: 12.5px;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+    .pcard-wide-inner {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .pcard-wide-inner .pcard-icon { font-size: 28px; flex-shrink: 0; }
+
+    #mengapa { border-top: 1px solid var(--border); }
+
+    .reason-list {
+      list-style: none;
+      margin-top: 8px;
+    }
+    .reason-list li {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .reason-list li:last-child { border-bottom: none; }
+    .reason-num {
+      flex-shrink: 0;
+      font-family: var(--ff-head);
+      font-size: 28px;
+      color: var(--gold);
+      opacity: .3;
+      line-height: 1;
+      margin-top: -2px;
+    }
+    .reason-text strong {
+      display: block;
+      font-family: var(--ff-head);
+      font-size: 15px;
+      color: var(--cream);
+      margin-bottom: 4px;
+    }
+    .reason-text p {
+      font-size: 13.5px;
+      color: #b8ad9e;
+      margin: 0;
+    }
+
+    #penutup {
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .closing-quote {
+      font-family: var(--ff-head);
+      font-size: clamp(18px, 5vw, 26px);
+      font-style: italic;
+      color: var(--cream);
+      line-height: 1.45;
+      max-width: 380px;
+      margin: 0 auto 20px;
+    }
+    .closing-quote span { color: var(--gold); }
+    .closing-attr {
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .closing-seal {
+      width: 70px;
+      height: 70px;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 28px auto 0;
+      opacity: .4;
+    }
+    .closing-seal svg { width: 36px; height: 36px; fill: var(--gold); }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 18px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: .5px;
+    }
+    footer span { color: var(--gold); }
+
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">Tan Malaka</div>
+    <div class="nav-links">
+      <a href="#biografi">Bio</a>
+      <a href="#prestasi">Jasa</a>
+      <a href="#mengapa">Inspirasi</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-lines"></div>
+
+    <div class="hero-portrait">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Ibrahim_Datoek_Tan_Malaka%2C_vermoedelijk_te_Amsterdam%2C_KITLV_17800.tiff/lossy-page1-500px-Ibrahim_Datoek_Tan_Malaka%2C_vermoedelijk_te_Amsterdam%2C_KITLV_17800.tiff.jpg" alt="Foto Tan Malaka" />
+    </div>
+
+    <div class="hero-badge">Pahlawan Nasional Indonesia</div>
+    <h1 class="hero-name"><span>Tan</span> Malaka</h1>
+    <p class="hero-tagline">"Bapak Republik" — Pejuang, Pemikir, dan Revolusioner Sejati</p>
+    <div class="hero-years">2 Juni 1897 — 21 Februari 1949</div>
+    <div class="scroll-hint">Scroll ke bawah</div>
+  </div>
+
+  <section id="biografi">
+    <div class="reveal">
+      <div class="section-label">01 — Biografi</div>
+      <h2 class="section-title">Siapa <span>Tan Malaka?</span></h2>
+      <div class="divider"></div>
+      <p>Ibrahim Datuk Tan Malaka lahir di Suliki, Sumatera Barat, 1897. Berkat kecerdasannya, ia mendapat beasiswa ke Belanda dan menjadi salah satu orang Indonesia pertama yang berpendidikan tinggi di Eropa.</p>
+      <p>Di sana ia berkenalan dengan paham sosialisme. Kembali ke tanah air, ia berjuang untuk kemerdekaan Indonesia lewat tulisan, organisasi, dan perlawanan langsung — bahkan saat diburu dan diasingkan selama puluhan tahun.</p>
+    </div>
+
+    <div class="quote-block reveal">
+      <p>"Bila kaum muda yang telah belajar di sekolah dan menganggap dirinya terlalu tinggi dan pintar untuk melebur dengan masyarakat yang bekerja dengan cangkul dan hanya memiliki cita-cita yang sederhana, maka lebih baik pendidikan itu tidak diberikan sama sekali."</p>
+      <cite>— Tan Malaka</cite>
+    </div>
+
+    <div class="bio-timeline reveal">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-year">1897</div>
+          <p class="tl-desc">Lahir di Suliki, Sumatera Barat.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-year">1913–1919</div>
+          <p class="tl-desc">Belajar di Belanda, menyerap paham sosialis-revolusioner.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-year">1921</div>
+          <p class="tl-desc">Mengajar di perkebunan Deli, berjuang untuk hak buruh pribumi.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-year">1927</div>
+          <p class="tl-desc">Menulis <em>Madilog</em> — karya filsafat besar tentang logika dan sains.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-year">1945</div>
+          <p class="tl-desc">Mendesak proklamasi kemerdekaan segera dan tanpa syarat.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-year">1949</div>
+          <p class="tl-desc">Gugur di Kediri. Ditetapkan Pahlawan Nasional tahun 1963.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="prestasi">
+    <div class="reveal">
+      <div class="section-label">02 — Prestasi & Jasa</div>
+      <h2 class="section-title">Warisan <span>Abadi</span></h2>
+      <div class="divider"></div>
+      <p>Tan Malaka meninggalkan warisan intelektual, politik, dan perjuangan yang tak ternilai bagi Indonesia.</p>
+    </div>
+
+    <div class="card-grid">
+      <div class="pcard reveal">
+        <span class="pcard-icon">📚</span>
+        <div class="pcard-title">Madilog</div>
+        <p class="pcard-desc">Karya filsafat besar yang mengajak rakyat berpikir logis, ilmiah, dan kritis.</p>
+      </div>
+      <div class="pcard reveal">
+        <span class="pcard-icon">🏛️</span>
+        <div class="pcard-title">Pendiri Gerakan</div>
+        <p class="pcard-desc">Mendirikan PKI awal & Partai Murba sebagai kendaraan kemerdekaan rakyat.</p>
+      </div>
+      <div class="pcard card-wide reveal">
+        <div class="pcard-wide-inner">
+          <span class="pcard-icon">🗺️</span>
+          <div>
+            <div class="pcard-title">Pelopor Kemerdekaan Indonesia</div>
+            <p class="pcard-desc">Sejak 1920-an ia sudah menyerukan "Merdeka 100%" — kemerdekaan penuh tanpa kompromi, jauh sebelum proklamasi 1945.</p>
+          </div>
+        </div>
+      </div>
+      <div class="pcard reveal">
+        <span class="pcard-icon">✊</span>
+        <div class="pcard-title">Hak Buruh</div>
+        <p class="pcard-desc">Berjuang untuk buruh perkebunan dan kaum tertindas di Deli dan Jawa.</p>
+      </div>
+      <div class="pcard reveal">
+        <span class="pcard-icon">🌏</span>
+        <div class="pcard-title">Jaringan Asia</div>
+        <p class="pcard-desc">Membangun solidaritas anti-imperialisme di Filipina, Tiongkok, dan Singapura.</p>
+      </div>
+      <div class="pcard card-wide reveal">
+        <div class="pcard-wide-inner">
+          <span class="pcard-icon">📖</span>
+          <div>
+            <div class="pcard-title">Penulis Produktif di Pengasingan</div>
+            <p class="pcard-desc">Diburu dan berpindah negeri, ia tetap menulis. <em>Menuju Republik Indonesia, Semangat Muda, Aksi Massa</em> — semua lahir di tengah pelarian.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section id="mengapa">
+    <div class="reveal">
+      <div class="section-label">03 — Inspirasi</div>
+      <h2 class="section-title">Mengapa Dia <span>Idolaku?</span></h2>
+      <div class="divider"></div>
+      <p>Tan Malaka memberiku jawaban atas pertanyaan: <em>apa kontribusiku untuk bangsa ini?</em></p>
+    </div>
+
+    <ul class="reason-list">
+      <li class="reveal">
+        <div class="reason-num">01</div>
+        <div class="reason-text">
+          <strong>Ilmu adalah Senjata</strong>
+          <p>Ia menulis Madilog agar rakyat berpikir logis dan tidak mudah dibodohi. Ilmu bukan sekadar ijazah — tapi alat pembebasan.</p>
+        </div>
+      </li>
+      <li class="reveal">
+        <div class="reason-num">02</div>
+        <div class="reason-text">
+          <strong>Tak Menyerah Meski Dikejar</strong>
+          <p>Puluhan tahun di pelarian, diburu tiga negara — tapi ia tidak berhenti. Rintangan bukan alasan untuk menyerah.</p>
+        </div>
+      </li>
+      <li class="reveal">
+        <div class="reason-num">03</div>
+        <div class="reason-text">
+          <strong>Berpihak pada Rakyat Kecil</strong>
+          <p>Punya gelar Eropa, tapi memilih berjuang bersama buruh dan petani. Ilmu harus diabdikan untuk yang lemah.</p>
+        </div>
+      </li>
+      <li class="reveal">
+        <div class="reason-num">04</div>
+        <div class="reason-text">
+          <strong>Visioner Tanpa Batas</strong>
+          <p>Saat orang lain ragu, ia sudah menulis cetak biru Indonesia merdeka. Mimpi besar, dikejar tanpa henti.</p>
+        </div>
+      </li>
+      <li class="reveal">
+        <div class="reason-num">05</div>
+        <div class="reason-text">
+          <strong>Berani Berbeda</strong>
+          <p>Ia tidak ikut arus. Punya pendirian sendiri berdasarkan logika dan nurani, bukan tekanan.</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <section id="penutup">
+    <div class="reveal">
+      <div class="section-label">Penutup</div>
+      <p class="closing-quote">"Hidup saya adalah untuk <span>perjuangan</span>, dan perjuangan saya adalah untuk <span>rakyat</span>."</p>
+      <p class="closing-attr">— Ibrahim Gelar Datuk Tan Malaka</p>
+      <div class="closing-seal">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+        </svg>
+      </div>
+    </div>
+    <div style="margin-top:32px;" class="reveal">
+      <p style="font-size:13px; color: var(--muted); text-align:center;">Tan Malaka ditetapkan sebagai Pahlawan Nasional Republik Indonesia berdasarkan Keputusan Presiden No. 53 Tahun 1963.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 — Idolaku: <span>Tan Malaka</span></p>
+  </footer>
+
+  <script>
+    
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          // Stagger sibling reveals
+          const siblings = [...entry.target.parentElement.querySelectorAll('.reveal:not(.visible)')];
+          const idx = siblings.indexOf(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, idx * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealEls.forEach(el => observer.observe(el));
+
+
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 80) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold2)' : '';
+      });
+    });
+  </script>
+</body>
+</html>
